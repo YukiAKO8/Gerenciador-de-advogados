@@ -6,11 +6,24 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 ?>
 
-<div class="wrap">
-    <h1>Adicionar Novo Advogado</h1>
-
-    <div class="container-novo-advogado-cadastro">
+<div class="wrap"><div class="aer-plugin-wrapper">
+    <div class="main-content-container">
+        <div class="animation-container">
+            <div class="squares">
+                <div class="square"></div>
+                <div class="square"></div>
+                <div class="square"></div>
+                <div class="square"></div>
+                <div class="square"></div>
+                <div class="square"></div>
+                <div class="square"></div>
+                <div class="square"></div>
+                <div class="square"></div>
+                <div class="square"></div>
+            </div>
+        </div>
         <form id="form-novo-advogado" method="post">
+            <h1 style="margin-bottom: 30px; font-size: 24px;">Adicionar Novo Advogado</h1>
             <div class="form-row">
                 <div class="form-field">
                     <label for="advogado_nome">Nome</label>
@@ -61,4 +74,4 @@ if ( ! defined( 'ABSPATH' ) ) {
             </div>
         </form>
     </div>
-</div>
+</div></div>

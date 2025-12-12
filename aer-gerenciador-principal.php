@@ -22,7 +22,7 @@ if ( ! defined( 'WPINC' ) ) {
  *
  * @param string $hook O hook da página atual.
  */
-function getAllAdvogados( $hook ) {
+function includes_scripts_aer_advogados( $hook ) {
 
     if ( 'toplevel_page_aer-gerenciador-advogados' !== $hook ) {
         return;
@@ -70,7 +70,7 @@ function getAllAdvogados( $hook ) {
         )
     );
 }
-add_action( 'admin_enqueue_scripts', 'getAllAdvogados' );
+add_action( 'admin_enqueue_scripts', 'includes_scripts_aer_advogados' );
 
 
 function aer_gerenciador_advogados_admin_menu() {
@@ -108,5 +108,5 @@ function aer_gerenciador_advogados_page_html() {
         )
     );
 }
-add_action( 'admin_enqueue_scripts', 'getAllAdvogados' );
+
 
