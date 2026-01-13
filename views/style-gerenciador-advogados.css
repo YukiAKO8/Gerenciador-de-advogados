@@ -37,7 +37,7 @@
     margin: 0;
     font-size: 45px;
     font-weight: 600;
-    margin-left: -130px;
+    margin-left: -80px;
         margin-top: -80px;
 }
 .plugin-subtitle {
@@ -45,25 +45,26 @@
     font-size: 16px;
     font-weight: 400;
     color: #50575e;
-    margin-left: -120px;
+    margin-left: -70px;
     margin-top: -2px;
 }
 
 /* Estilo para a Logo no Cabeçalho */
 .plugin-logo {
-    height: 325px; /* Tamanho ajustado para alinhar melhor com o título */
+    height: 200px;
     width: auto;
-    margin-top:-100px;
-    margin-left:-380px;
+    margin-top: -80px;
+    margin-left: -380px;
 }
 
 /* Seção dos Cards de Métricas */
 .container-retangulos {
-    display: grid;
+    display: grid
+;
     grid-template-columns: repeat(3, 1fr);
     gap: 24px;
     margin-bottom: 32px;
-    margin-top: -80px;
+    margin-top: -50px;
 }
 
 .container-retangulos .retangulo {
@@ -71,8 +72,9 @@
     border: 1px solid #e0e0e0;
     padding: 24px;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    transition: box-shadow 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);    
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+    cursor: pointer;
 }
 
 /* Bordas coloridas para cada card de métrica */
@@ -90,6 +92,7 @@
 
 .container-retangulos .retangulo:hover {
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transform: translateY(-3px);
 }
 
 .container-retangulos .retangulo h3 {
@@ -126,6 +129,31 @@
     font-weight: 600;
 }
 
+.listagem-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.search-input {
+    padding: 9px 15px !important;
+    border: 1px solid #ddd !important;
+    border-radius: 20px !important;
+    font-size: 14px !important;
+    width: 250px !important;
+    transition: all 0.2s ease-in-out !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23999' class='bi bi-search' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    padding-right: 40px;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: #2a4982;
+    box-shadow: 0 0 0 1px #2a4982;
+}
+
 /* Tabela de Advogados */
 .tabela-advogados {
     width: 100%;
@@ -151,6 +179,33 @@
 .tabela-advogados tbody tr:hover {
     background-color: #f9f9f9; /* Efeito hover suave */
 }
+
+/* Adiciona um cursor de ponteiro para indicar que a linha é clicável */
+.tabela-advogados .advogado-row {
+    cursor: pointer;
+}
+
+/* --- Estilos para o Indicador de Status na Lista --- */
+.status-indicator {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 15px;
+    font-size: 12px;
+    font-weight: 500;
+    text-align: center;
+    color: #fff;
+}
+
+.status-ativo {
+    background-color: #28a745; /* Verde */
+    color: #fff;
+}
+
+.status-inativo {
+    background-color: #dc3545; /* Vermelho */
+    color: #fff;
+}
+
 
 /* Botão "Adicionar Advogado" */
 .botao-adicionar-advogado {
@@ -178,16 +233,55 @@
     margin-right: 5px; /* Apenas o espaçamento à direita é necessário */
 }
 
-/* Estilos para o Formulário de Cadastro */
-.container-novo-advogado-cadastro {
-    background-color: #fff;
-    border: 1px solid #ccd0d4;
-    padding: 30px;
-    margin-top: 20px;
-    border-radius: 8px;
-    box-shadow: 0 1px 1px rgba(0,0,0,.04);
+/* --- Estilos do Modal de Cadastro/Edição --- */
+
+/* O container do modal (overlay) */
+#aer-cadastro-container {
+    position: fixed; /* Fica fixo na tela */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); /* Fundo escuro semi-transparente */
+    z-index: 1000; /* Garante que fique sobre todo o conteúdo */
+    display: flex; /* Usa flexbox para centralizar o conteúdo */
+    align-items: center;
+    justify-content: center;
+    padding: 40px; /* Adiciona espaço interno para melhor centralização */
+    opacity: 0; /* Começa invisível */
+    visibility: hidden; /* Começa escondido */
+    transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
+/* Classe para ativar o modal */
+#aer-cadastro-container.modal-ativo {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* O formulário dentro do modal */
+#form-novo-advogado {
+    background-color: #fff;
+    padding: 52px; /* Ajustado para igualar a listagem */
+    border-radius: 8px;
+    border: 1px solid #e0e0e0; /* Adicionada borda para igualar a listagem */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    width: 90%; /* Ocupa 90% da largura da tela */
+    max-width: 1600px; /* Define uma largura máxima para telas muito grandes */
+    position: relative; /* Necessário para a animação de fundo */
+    transform: scale(0.95); /* Efeito de zoom ao aparecer */
+    transition: transform 0.3s ease;
+}
+
+#aer-cadastro-container.modal-ativo #form-novo-advogado {
+    transform: scale(1); /* Retorna ao tamanho normal quando ativo */
+}
+
+/* Garante que o conteúdo do formulário fique na frente da animação */
+#form-novo-advogado > *:not(.animated-background) {
+    position: relative;
+    z-index: 1;
+}
 .form-row {
     display: flex;
     gap: 20px;
@@ -200,11 +294,7 @@
     flex-direction: column;
 }
 
-.form-field label {
-    font-weight: 500;
-    margin-bottom: 5px;
-}
-
+.form-field select.regular-text,
 .form-field input.regular-text {
     width: 100%;
     padding: 8px 12px;
@@ -212,8 +302,15 @@
     border-radius: 6px;
     box-shadow: inset 0 1px 2px rgba(0,0,0,.07);
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    background-color: #fff;
 }
 
+.form-field label {
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+.form-field select.regular-text:focus,
 .form-field input.regular-text:focus {
     outline: none;
     border-color: #2271b1;
@@ -267,116 +364,26 @@
     color: #212529 !important; /* Texto escuro para melhor contraste */
 }
 
-/* --- Animação de fundo com quadrados --- */
+/* --- Animação de fundo Hexagonal --- */
 
-/* O container da animação, posicionado atrás do conteúdo */
-.animation-container {
+/* O container da animação, posicionado atrás do conteúdo. Substitui .animation-container */
+.animated-background {
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    overflow: hidden; /* Garante que os quadrados não saiam do container */
+    overflow: hidden;
     z-index: 0; /* Coloca a animação atrás do conteúdo */
     border-radius: 8px; /* Para corresponder ao .main-content-container */
 }
 
+.animated-background canvas {
+    display: block;
+}
+
 /* Garante que o conteúdo real fique na frente da animação */
-.main-content-container > *:not(.animation-container) {
+.main-content-container > *:not(.animated-background) {
     position: relative;
     z-index: 1;
-}
-
-.squares {
-  height: 100%;
-  display: flex;
-  justify-content: space-around;
-  overflow: hidden;
-  font-size: 8px; 
-}
-
-.square {
-  animation: squares 90s linear infinite;
-  align-self: flex-end;
-  width: 1em;
-  height: 1em;
-  transform: translateY(100%);
-  background: #ebebeb;
-}
-
-.square:nth-child(2) {
-  height: 1.5em;
-  width: 3em;
-  animation-delay: 1s;
-  animation-duration: 34s;
-  filter: blur(5px);
-}
-
-.square:nth-child(3) {
-  height: 2em;
-  width: 1em;
-  animation-delay: 1.5s;
-  animation-duration: 16s;
-  filter: blur(1px);
-}
-
-.square:nth-child(4) {
-  height: 1em;
-  width: 1.5em;
-  animation-delay: 0.5s;
-  filter: blur(3px);
-  animation-duration: 26s;
-}
-
-.square:nth-child(5) {
-  height: 1.25em;
-  width: 2em;
-  animation-delay: 4s;
-  filter: blur(2px);
-  animation-duration: 22s;
-}
-
-.square:nth-child(6) {
-  height: 2.5em;
-  width: 2em;
-  animation-delay: 2s;
-  filter: blur(1px);
-  animation-duration: 18s;
-}
-
-.square:nth-child(7) {
-  height: 5em;
-  width: 2em;
-  animation-delay: 3s;
-  filter: blur(2.5px);
-  animation-duration: 24s;
-}
-
-.square:nth-child(8) {
-  height: 1em;
-  width: 3em;
-  animation-delay: 5s;
-  filter: blur(6px);
-  animation-duration: 36s;
-}
-
-.square:nth-child(9) {
-  height: 1.5em;
-  width: 2em;
-  animation-delay: 0.8s;
-  filter: blur(0.5px);
-  animation-duration: 18s;
-}
-
-.square:nth-child(10) {
-  height: 3em;
-  width: 2.4em;
-  animation-delay: 6s;
-  filter: blur(0.5px);
-  animation-duration: 24s;
-}
-
-@keyframes squares {
-  from { transform: translateY(100%) rotate(-50deg); }
-  to   { transform: translateY(calc(-100vh + -100%)) rotate(20deg); }
 }

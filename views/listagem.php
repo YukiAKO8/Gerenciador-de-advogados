@@ -7,6 +7,23 @@ $response = obter_advogados_da_api();
 
 $advogados = json_decode($response['data'], true);
 
+// --- LÓGICA PARA CONTAR OS STATUS ---
+$total_advogados = 0;
+$total_ativos = 0;
+$total_inativos = 0;
+
+if (!empty($advogados) && is_array($advogados)) {
+    $total_advogados = count($advogados);
+    foreach ($advogados as $adv) {
+        // Considera 'ativo' como padrão se o status não estiver definido ou for diferente de 'inativo'
+        if (isset($adv['status']) && $adv['status'] === 'inativo') {
+            $total_inativos++;
+        } else {
+            $total_ativos++;
+        }
+    }
+}
+
 ?>
 <script>
     let user_atual=<?php echo get_current_user_id(); ?>;
@@ -39,39 +56,28 @@ $advogados = json_decode($response['data'], true);
 
 <div class="wrap"><div class="aer-plugin-wrapper">
     <div class="main-content-container">
-        <div class="animation-container">
-            <div class="squares">
-                <div class="square"></div>
-                <div class="square"></div>
-                <div class="square"></div>
-                <div class="square"></div>
-                <div class="square"></div>
-                <div class="square"></div>
-                <div class="square"></div>
-                <div class="square"></div>
-                <div class="square"></div>
-                <div class="square"></div>
-            </div>
-        </div>
+        <!-- Fundo animado Hexagonal -->
+        <div class="animated-background" data-color="white"></div>
+
         <div class="plugin-header">
             <img src="<?php echo plugin_dir_url( __FILE__ ) . '../views/LogoCracha.png'; ?>" alt="Logo" class="plugin-logo">
             <div class="plugin-header-text">
                 <h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
-                <h2 class="plugin-subtitle">Organizar, centralizar e facilitar o controle de todas as informações relacionadas aos profissionais da área jurídica</h2>
+                <h2 class="plugin-subtitle">Organizar, centralizar e facilitar o controle de todas as informações relacionadas aos profissionais do SNA</h2>
             </div>
         </div>
         <div class="container-retangulos">
-            <div class="retangulo retangulo-total">
-                <h3>Total de advogados</h3>
-                <p class="numero">0</p>
+            <div class="retangulo retangulo-total" data-filter="todos">
+                <h3>Total de funcionários</h3>
+                <p class="numero"><?php echo esc_html($total_advogados); ?></p>
             </div>
-            <div class="retangulo retangulo-ativos">
+            <div class="retangulo retangulo-ativos" data-filter="ativo">
                 <h3>Total Ativos</h3>
-                <p class="numero">0</p>
+                <p class="numero"><?php echo esc_html($total_ativos); ?></p>
             </div>
-            <div class="retangulo retangulo-inativos">
+            <div class="retangulo retangulo-inativos" data-filter="inativo">
                 <h3>Total inativos</h3>
-                <p class="numero">0</p>
+                <p class="numero"><?php echo esc_html($total_inativos); ?></p>
             </div>
         </div>
 
@@ -79,7 +85,10 @@ $advogados = json_decode($response['data'], true);
         <div class="principal-listagem">
             <div class="listagem-header">
                 <h2>Advogados Cadastrados</h2>
-                <a href="#" class="botao-adicionar-advogado"><span class="dashicons dashicons-plus-alt"></span>Adicionar Advogado</a>
+                <div class="listagem-actions">
+                    <input type="text" id="filtro-nome-advogado" class="search-input" placeholder="Pesquisar por nome...">
+                    <a href="#" class="botao-adicionar-advogado"><span class="dashicons dashicons-plus-alt"></span>Adicionar Advogado</a>
+                </div>
             </div>
             
 
@@ -87,14 +96,25 @@ $advogados = json_decode($response['data'], true);
                 <thead>
                     <tr><th>Nome</th>
                     <th>CPF</th>
-                    <th>Status</th></tr>
+                    <th>Setor</th>
+                    <th style="width: 120px;">Status</th></tr>
                 </thead>
                 <tbody>
                     <?php
             
-foreach ($advogados as $adv) {
-    echo "<tr><td>" . $adv['nome'] . "</td><td>" . $adv['cpf_cnpj'] . "</td><td></td></tr>";
-}
+                    if (!empty($advogados)) {
+                        foreach ($advogados as $adv) {
+                            // Define a classe e o texto do status
+                            $status_class = (isset($adv['status']) && $adv['status'] === 'inativo') ? 'status-inativo' : 'status-ativo';
+                            $status_text  = ($status_class === 'status-inativo') ? 'Inativo' : 'Ativo';
+                            $status_value = ($status_class === 'status-inativo') ? 'inativo' : 'ativo';
+
+                            // Armazena os dados do advogado como um atributo data-
+                            echo "<tr class='advogado-row' data-status='" . esc_attr($status_value) . "' data-advogado='" . esc_attr(json_encode($adv)) . "'>";
+                            echo "<td>" . esc_html($adv['nome']) . "</td><td>" . esc_html($adv['cpf_cnpj']) . "</td><td>" . esc_html($adv['setor'] ?? '-') . "</td>";
+                            echo "<td><span class='status-indicator " . $status_class . "'>" . esc_html($status_text) . "</span></td></tr>";
+                        }
+                    }
 
 ?></tbody>
             </table>

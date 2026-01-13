@@ -75,8 +75,8 @@ add_action( 'admin_enqueue_scripts', 'includes_scripts_aer_advogados' );
 
 function aer_gerenciador_advogados_admin_menu() {
     add_menu_page(
-        'Gerenciador de Advogados',
-        'Cadastro de Advogados',                
+        'Funcionários',
+        'Cadastro de Funcionários',                
         'manage_options',          
         'aer-gerenciador-advogados',
         'aer_gerenciador_advogados_page_html', 
@@ -93,7 +93,7 @@ function aer_gerenciador_advogados_page_html() {
     echo '</div>';
 
 
-    echo '<div id="aer-cadastro-container" style="display: none;">';
+    echo '<div id="aer-cadastro-container">'; // Removido o style="display: none;"
     require_once plugin_dir_path( __FILE__ ) . 'views/cadastro-novo.php';
     echo '</div>';
 
@@ -108,5 +108,3 @@ function aer_gerenciador_advogados_page_html() {
         )
     );
 }
-
-
