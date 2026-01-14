@@ -26,7 +26,7 @@ const fullUrlListar = AerApiSettings.root + 'aer-api/v1/funcionarios';
     });
     
     
- const fullUrl = AerApiSettings.root +  'aer-api/funcionarios/savefuncionarios';
+ const fullUrl = AerApiSettings.root +  'aer-api/funcionarios/saveFuncionarios';
     $('#form-novo-funcionario').on('submit', function(e) {
         e.preventDefault(); 
 
@@ -41,11 +41,16 @@ const fullUrlListar = AerApiSettings.root + 'aer-api/v1/funcionarios';
             bairro: $('#funcionario_bairro').val(),
             telefone: $('#funcionario_telefone').val(),
             setor: $('#setor').val(),
-            status: $('#funcionario_status').val(), // Adiciona o status ao payload
+            ativo: $('#funcionario_status').val() === 'ativo' ? 1 : 0, // Envia 1 ou 0 conforme esperado pela API
             email: $('#funcionario_email').val(),
             createdBy: user_atual,
             updatedBy: user_atual,
         };
+
+        // Se o ID estiver vazio (novo cadastro), removemos a propriedade 'id' do payload.
+        if (!payload.id || payload.id === '') {
+            delete payload.id;
+        }
 
 const validationResult = validatefuncionario(payload);
 if (validationResult.erro) {
@@ -71,12 +76,10 @@ if (validationResult.erro) {
             return response.json();
         })
         .then(data => {
-            funcionarios = JSON.parse(data.data)  
-         
-            // AJUSTE: Tratamento de sucesso mais claro para o usuário.
+           
             alert('funcionario salvo com sucesso!');
-            $('#form-novo-funcionario')[0].reset(); // Limpa o formulário
-            window.location.reload(); // Recarrega a página para ver as alterações na lista
+            $('#form-novo-funcionario')[0].reset(); 
+            window.location.reload(); 
         })
         .catch(error => {
             console.error(':x_vermelho: Erro na requisição AJAX:', error);
@@ -89,15 +92,14 @@ if (validationResult.erro) {
         });
 });
 
-    // --- LÓGICA PARA ABRIR E PREENCHER O FORMULÁRIO DE EDIÇÃO ---
-    // Adiciona um listener de evento na tabela. O evento é delegado para as linhas '.funcionario-row'
+    
     $('.tabela-funcionarios tbody').on('click', '.funcionario-row', function() {
-        // Pega o objeto do funcionario do atributo data-
+       
         const funcionarioData = $(this).data('funcionario');
 
         if (funcionarioData) {
-            // Preenche os campos do formulário com os dados do funcionario
-            $('#funcionario_id').val(funcionarioData.id);
+           
+            $('#funcionario_id').val(funcionarioData.id || funcionarioData.id_funcionario);
             $('#funcionario_nome').val(funcionarioData.nome);
             $('#funcionario_cpf_cnpj').val(funcionarioData.cpf_cnpj);
             $('#funcionario_endereco').val(funcionarioData.endereco);
@@ -106,7 +108,13 @@ if (validationResult.erro) {
             $('#funcionario_bairro').val(funcionarioData.bairro);
             $('#funcionario_telefone').val(funcionarioData.telefone);
             $('#setor').val(funcionarioData.setor);
-            $('#funcionario_status').val(funcionarioData.status || 'ativo'); // Preenche o status
+            
+            // Verifica se existe 'ativo' (1/0) ou 'status' para preencher o campo corretamente
+            if (funcionarioData.ativo !== undefined) {
+                $('#funcionario_status').val(funcionarioData.ativo == 1 ? 'ativo' : 'inativo');
+            } else {
+                $('#funcionario_status').val(funcionarioData.status || 'ativo');
+            }
             $('#funcionario_email').val(funcionarioData.email);
 
             // Altera o título do formulário

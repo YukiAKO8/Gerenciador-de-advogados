@@ -96,15 +96,4 @@ function aer_gerenciador_funcionarios_page_html() {
     echo '<div id="aer-cadastro-container">'; // Removido o style="display: none;"
     require_once plugin_dir_path( __FILE__ ) . 'views/cadastro-novo.php';
     echo '</div>';
-
-            wp_localize_script(
-        'java-gerenciador-funcionarios',
-        'aer-funcionarios-js',
-        'AerApiSettings',
-        array(
-            'root' => esc_url_raw(rest_url()),
-            'endpoint' => 'aer-api',
-            'nonce' => wp_create_nonce('wp_rest'),
-        )
-    );
 }

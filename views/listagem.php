@@ -18,7 +18,8 @@ if (!empty($funcionarios) && is_array($funcionarios)) {
     $total_funcionarios = count($funcionarios);
     foreach ($funcionarios as $adv) {
         // Considera 'ativo' como padrão se o status não estiver definido ou for diferente de 'inativo'
-        if (isset($adv['status']) && $adv['status'] === 'inativo') {
+        // Verifica também o campo 'ativo' (1 ou 0)
+        if ((isset($adv['ativo']) && $adv['ativo'] == 0) || (isset($adv['status']) && $adv['status'] === 'inativo')) {
             $total_inativos++;
         } else {
             $total_ativos++;
@@ -32,28 +33,19 @@ if (!empty($funcionarios) && is_array($funcionarios)) {
     </script>
 
 <style>
-    canvas.connecting-dots {
-    body {
-        background-color: #333;
-    }
+    /* Estilos para o canvas de fundo p5.js */
     #p5-canvas-container {
         position: fixed;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        top: 0;
-        left: 0;
-        z-index: 0; /* Coloca o canvas atrás do conteúdo */
-        z-index: 0;
+        z-index: 0; /* Coloca o canvas atrás de outro conteúdo */
     }
+    /* Ajuste para garantir que o conteúdo do plugin fique na frente do canvas */
     .wrap {
-        position: relative;
-        z-index: 1; /* Garante que o conteúdo fique na frente do canvas */
-        background-color: rgba(255, 255, 255, 0.85); /* Fundo semi-transparente para melhor leitura */
-        padding: 20px;
-        border-radius: 8px;
-    }
+        position: relative; /* Necessário para o z-index funcionar */
+        z-index: 1; 
     }
 </style>
 
@@ -108,9 +100,10 @@ if (!empty($funcionarios) && is_array($funcionarios)) {
                     if (!empty($funcionarios)) {
                         foreach ($funcionarios as $adv) {
                             // Define a classe e o texto do status
-                            $status_class = (isset($adv['status']) && $adv['status'] === 'inativo') ? 'status-inativo' : 'status-ativo';
-                            $status_text  = ($status_class === 'status-inativo') ? 'Inativo' : 'Ativo';
-                            $status_value = ($status_class === 'status-inativo') ? 'inativo' : 'ativo';
+                            $is_inativo = (isset($adv['ativo']) && $adv['ativo'] == 0) || (isset($adv['status']) && $adv['status'] === 'inativo');
+                            $status_class = $is_inativo ? 'status-inativo' : 'status-ativo';
+                            $status_text  = $is_inativo ? 'Inativo' : 'Ativo';
+                            $status_value = $is_inativo ? 'inativo' : 'ativo';
 
                             // Armazena os dados do funcionario como um atributo data-
                             echo "<tr class='funcionario-row' data-status='" . esc_attr($status_value) . "' data-funcionario='" . esc_attr(json_encode($adv)) . "'>";

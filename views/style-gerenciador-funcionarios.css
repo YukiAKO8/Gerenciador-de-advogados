@@ -379,6 +379,10 @@
     background: #ffc107 !important; /* Amarelo */
     color: #212529 !important; /* Texto escuro para melhor contraste */
 }
+
+/* --- Animação de fundo Hexagonal --- */
+
+/* O container da animação, posicionado atrás do conteúdo. Substitui .animation-container */
 .animated-background {
     position: absolute;
     top: 0;
@@ -386,12 +390,15 @@
     right: 0;
     bottom: 0;
     overflow: hidden;
-    z-index: 0;
-    border-radius: 8px; 
+    z-index: 0; /* Coloca a animação atrás do conteúdo */
+    border-radius: 8px; /* Para corresponder ao .main-content-container */
 }
+
 .animated-background canvas {
     display: block;
 }
+
+/* Garante que o conteúdo real fique na frente da animação */
 .main-content-container > *:not(.animated-background) {
     position: relative;
     z-index: 1;
