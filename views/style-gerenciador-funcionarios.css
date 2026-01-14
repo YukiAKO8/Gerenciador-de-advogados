@@ -110,7 +110,7 @@
     color: #1d2327;
 }
 
-/* Seção Principal da Listagem de Advogados */
+/* Seção Principal da Listagem de funcionarios */
 .principal-listagem {
     /* Estilos de container movidos para .main-content-container */
     margin-top: 32px; /* Adiciona espaço acima da tabela */
@@ -154,20 +154,20 @@
     box-shadow: 0 0 0 1px #2a4982;
 }
 
-/* Tabela de Advogados */
-.tabela-advogados {
+/* Tabela de funcionarios */
+.tabela-funcionarios {
     width: 100%;
     border-collapse: collapse;
 }
 
-.tabela-advogados th,
-.tabela-advogados td {
+.tabela-funcionarios th,
+.tabela-funcionarios td {
     padding: 14px 16px;
     border-bottom: 1px solid #f0f0f0; /* Linhas separadoras suaves */
     text-align: left;
 }
 
-.tabela-advogados th {
+.tabela-funcionarios th {
     background-color: #f7f7f7; /* Fundo cinza claro para o cabeçalho */
     font-weight: 600;
     font-size: 13px;
@@ -176,12 +176,12 @@
     border-top: 1px solid #f0f0f0;
 }
 
-.tabela-advogados tbody tr:hover {
+.tabela-funcionarios tbody tr:hover {
     background-color: #f9f9f9; /* Efeito hover suave */
 }
 
 /* Adiciona um cursor de ponteiro para indicar que a linha é clicável */
-.tabela-advogados .advogado-row {
+.tabela-funcionarios .funcionario-row {
     cursor: pointer;
 }
 
@@ -207,8 +207,8 @@
 }
 
 
-/* Botão "Adicionar Advogado" */
-.botao-adicionar-advogado {
+/* Botão "Adicionar funcionario" */
+.botao-adicionar-funcionario {
     display: inline-flex; /* Usa flex para alinhar o conteúdo interno */
     align-items: center; /* Centraliza verticalmente o ícone e o texto */
     justify-content: center; /* Centraliza horizontalmente */
@@ -224,12 +224,12 @@
     transition: all 0.2s ease-in-out;
 }
 
-.botao-adicionar-advogado:hover {
+.botao-adicionar-funcionario:hover {
     background: #2a4982; /* Fundo roxo no hover */
     color: #fff; /* Texto branco no hover */
 }
 
-.botao-adicionar-advogado .dashicons {
+.botao-adicionar-funcionario .dashicons {
     margin-right: 5px; /* Apenas o espaçamento à direita é necessário */
 }
 
@@ -260,7 +260,7 @@
 }
 
 /* O formulário dentro do modal */
-#form-novo-advogado {
+#form-novo-funcionario {
     background-color: #fff;
     padding: 52px; /* Ajustado para igualar a listagem */
     border-radius: 8px;
@@ -273,12 +273,28 @@
     transition: transform 0.3s ease;
 }
 
-#aer-cadastro-container.modal-ativo #form-novo-advogado {
+/* Estilo para o botão de fechar (X) no modal */
+.modal-close-button {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    font-size: 30px;
+    font-weight: bold;
+    color: #666;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
+    z-index: 2; /* Garante que o botão fique acima do conteúdo do modal */
+}
+
+
+#aer-cadastro-container.modal-ativo #form-novo-funcionario {
     transform: scale(1); /* Retorna ao tamanho normal quando ativo */
 }
 
 /* Garante que o conteúdo do formulário fique na frente da animação */
-#form-novo-advogado > *:not(.animated-background) {
+#form-novo-funcionario > *:not(.animated-background):not(.modal-close-button) {
     position: relative;
     z-index: 1;
 }
@@ -336,7 +352,7 @@
     margin-right: 3px;
 }
 
-.form-buttons .salvar-adv {
+.form-buttons .salvar-funcionario {
     background: transparent !important;
     border: 2px solid #28a745 !important; /* Verde */
     color: #28a745 !important; /* Verde */
@@ -345,7 +361,7 @@
     padding: 8px 16px !important;
 }
 
-.form-buttons .salvar-adv:hover {
+.form-buttons .salvar-funcionario:hover {
     background: #28a745 !important; /* Verde */
     color: #fff !important;
 }

@@ -3,18 +3,20 @@
 if ( ! defined( 'ABSPATH' ) ) {
     exit; 
 }
-$response = obter_advogados_da_api();
+$response = obter_funcionarios_da_api();
 
-$advogados = json_decode($response['data'], true);
+$funcionarios = json_decode($response['data'], true);
+
+
 
 // --- LÓGICA PARA CONTAR OS STATUS ---
-$total_advogados = 0;
+$total_funcionarios = 0;
 $total_ativos = 0;
 $total_inativos = 0;
 
-if (!empty($advogados) && is_array($advogados)) {
-    $total_advogados = count($advogados);
-    foreach ($advogados as $adv) {
+if (!empty($funcionarios) && is_array($funcionarios)) {
+    $total_funcionarios = count($funcionarios);
+    foreach ($funcionarios as $adv) {
         // Considera 'ativo' como padrão se o status não estiver definido ou for diferente de 'inativo'
         if (isset($adv['status']) && $adv['status'] === 'inativo') {
             $total_inativos++;
@@ -52,6 +54,7 @@ if (!empty($advogados) && is_array($advogados)) {
         padding: 20px;
         border-radius: 8px;
     }
+    }
 </style>
 
 <div class="wrap"><div class="aer-plugin-wrapper">
@@ -69,7 +72,7 @@ if (!empty($advogados) && is_array($advogados)) {
         <div class="container-retangulos">
             <div class="retangulo retangulo-total" data-filter="todos">
                 <h3>Total de funcionários</h3>
-                <p class="numero"><?php echo esc_html($total_advogados); ?></p>
+                <p class="numero"><?php echo esc_html($total_funcionarios); ?></p>
             </div>
             <div class="retangulo retangulo-ativos" data-filter="ativo">
                 <h3>Total Ativos</h3>
@@ -84,15 +87,15 @@ if (!empty($advogados) && is_array($advogados)) {
 
         <div class="principal-listagem">
             <div class="listagem-header">
-                <h2>Advogados Cadastrados</h2>
+                <h2>funcionarios Cadastrados</h2>
                 <div class="listagem-actions">
-                    <input type="text" id="filtro-nome-advogado" class="search-input" placeholder="Pesquisar por nome...">
-                    <a href="#" class="botao-adicionar-advogado"><span class="dashicons dashicons-plus-alt"></span>Adicionar Advogado</a>
+                    <input type="text" id="filtro-nome-funcionario" class="search-input" placeholder="Pesquisar por nome...">
+                    <a href="#" class="botao-adicionar-funcionario"><span class="dashicons dashicons-plus-alt"></span>Adicionar funcionario</a>
                 </div>
             </div>
             
 
-            <table class="tabela-advogados">
+            <table class="tabela-funcionarios">
                 <thead>
                     <tr><th>Nome</th>
                     <th>CPF</th>
@@ -102,15 +105,15 @@ if (!empty($advogados) && is_array($advogados)) {
                 <tbody>
                     <?php
             
-                    if (!empty($advogados)) {
-                        foreach ($advogados as $adv) {
+                    if (!empty($funcionarios)) {
+                        foreach ($funcionarios as $adv) {
                             // Define a classe e o texto do status
                             $status_class = (isset($adv['status']) && $adv['status'] === 'inativo') ? 'status-inativo' : 'status-ativo';
                             $status_text  = ($status_class === 'status-inativo') ? 'Inativo' : 'Ativo';
                             $status_value = ($status_class === 'status-inativo') ? 'inativo' : 'ativo';
 
-                            // Armazena os dados do advogado como um atributo data-
-                            echo "<tr class='advogado-row' data-status='" . esc_attr($status_value) . "' data-advogado='" . esc_attr(json_encode($adv)) . "'>";
+                            // Armazena os dados do funcionario como um atributo data-
+                            echo "<tr class='funcionario-row' data-status='" . esc_attr($status_value) . "' data-funcionario='" . esc_attr(json_encode($adv)) . "'>";
                             echo "<td>" . esc_html($adv['nome']) . "</td><td>" . esc_html($adv['cpf_cnpj']) . "</td><td>" . esc_html($adv['setor'] ?? '-') . "</td>";
                             echo "<td><span class='status-indicator " . $status_class . "'>" . esc_html($status_text) . "</span></td></tr>";
                         }
@@ -130,9 +133,8 @@ if (!empty($advogados) && is_array($advogados)) {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.js"></script>
 <?php
 
-function obter_advogados_da_api() {
-    $api_base = get_rest_url(null, 'aer-api/advogados/getAllAdvogados'); 
-    echo $api_base;
+function obter_funcionarios_da_api() {
+    $api_base = get_rest_url(null, 'aer-api/funcionarios/getAllFuncionarios'); 
     $args = array(
         'method'      => 'POST', // Assumindo que a API realmente espera um POST para 'getAll'
         'headers'     => array(
@@ -146,14 +148,14 @@ function obter_advogados_da_api() {
     $response = wp_remote_post($api_base, $args);
     // 1. Verifica se houve um erro na requisição HTTP (ex: falha de conexão)
     if ( is_wp_error( $response ) ) {
-        error_log( 'Erro ao conectar à API de advogados: ' . $response->get_error_message() );
+        error_log( 'Erro ao conectar à API de funcionarios: ' . $response->get_error_message() );
         return []; // Retorna um array vazio em caso de erro
     }
     
     // 2. Verifica o código de status HTTP da resposta
     $http_status = wp_remote_retrieve_response_code( $response );
     if ( 200 !== $http_status ) {
-        error_log( 'API de advogados retornou status HTTP inesperado: ' . $http_status . ' - Body: ' . wp_remote_retrieve_body( $response ) );
+        error_log( 'API de funcionarios retornou status HTTP inesperado: ' . $http_status . ' - Body: ' . wp_remote_retrieve_body( $response ) );
         return []; // Retorna um array vazio se o status não for 200 OK
     }
     
@@ -162,7 +164,7 @@ function obter_advogados_da_api() {
     
     // 3. Verifica se houve um erro na decodificação do JSON
     if ( json_last_error() !== JSON_ERROR_NONE ) {
-        error_log( 'Erro ao decodificar JSON da API de advogados: ' . json_last_error_msg() . ' - Body: ' . $body );
+        error_log( 'Erro ao decodificar JSON da API de funcionarios: ' . json_last_error_msg() . ' - Body: ' . $body );
         return []; // Retorna um array vazio em caso de erro de JSON
     }
     

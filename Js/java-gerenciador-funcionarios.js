@@ -5,13 +5,13 @@ jQuery(document).ready(function($) {
 
     // CORREÇÃO: A URL deve seguir o padrão da API REST para evitar erro 404
     // Ex: /wp-json/<namespace>/<versao>/<rota>
-const fullUrlListar = AerApiSettings.root + 'aer-api/v1/advogados';
+const fullUrlListar = AerApiSettings.root + 'aer-api/v1/funcionarios';
 
-    $('.botao-adicionar-advogado').on('click', function(e) {
+    $('.botao-adicionar-funcionario').on('click', function(e) {
         e.preventDefault();
-        $('#form-novo-advogado')[0].reset(); // Limpa o formulário para um novo cadastro
-        $('#advogado_id').val(''); // Garante que o ID está vazio
-        $('#form-novo-advogado h1').text(' Adicionar novo funcionário   '); // Reseta o título do formulário
+        $('#form-novo-funcionario')[0].reset(); // Limpa o formulário para um novo cadastro
+        $('#funcionario_id').val(''); // Garante que o ID está vazio
+        $('#form-novo-funcionario h1').text(' Adicionar novo funcionário   '); // Reseta o título do formulário
         cadastroContainer.addClass('modal-ativo'); // Abre o modal
     });
 
@@ -20,29 +20,34 @@ const fullUrlListar = AerApiSettings.root + 'aer-api/v1/advogados';
         e.preventDefault();
         cadastroContainer.removeClass('modal-ativo'); // Fecha o modal
     });
+    $('#botao-fechar-modal').on('click', function(e) {
+        e.preventDefault();
+        cadastroContainer.removeClass('modal-ativo'); // Fecha o modal
+    });
     
- const fullUrl = AerApiSettings.root +  'aer-api/advogados/saveAdvogados';
-    $('#form-novo-advogado').on('submit', function(e) {
+    
+ const fullUrl = AerApiSettings.root +  'aer-api/funcionarios/savefuncionarios';
+    $('#form-novo-funcionario').on('submit', function(e) {
         e.preventDefault(); 
 
         // AJUSTE: Adicionado 'id' para permitir a atualização.
         const payload = {
-            id: $('#advogado_id').val(), // Pega o ID do campo oculto
-            nome: $('#advogado_nome').val(),
-            cpf_cnpj: $('#advogado_cpf_cnpj').val(),
-            endereco: $('#advogado_endereco').val(),
-            uf: $('#advogado_uf').val(),
-            cidade: $('#advogado_cidade').val(),
-            bairro: $('#advogado_bairro').val(),
-            telefone: $('#advogado_telefone').val(),
+            id: $('#funcionario_id').val(), // Pega o ID do campo oculto
+            nome: $('#funcionario_nome').val(),
+            cpf_cnpj: $('#funcionario_cpf_cnpj').val(),
+            endereco: $('#funcionario_endereco').val(),
+            uf: $('#funcionario_uf').val(),
+            cidade: $('#funcionario_cidade').val(),
+            bairro: $('#funcionario_bairro').val(),
+            telefone: $('#funcionario_telefone').val(),
             setor: $('#setor').val(),
-            status: $('#advogado_status').val(), // Adiciona o status ao payload
-            email: $('#advogado_email').val(),
+            status: $('#funcionario_status').val(), // Adiciona o status ao payload
+            email: $('#funcionario_email').val(),
             createdBy: user_atual,
             updatedBy: user_atual,
         };
 
-const validationResult = validateAdvogado(payload);
+const validationResult = validatefuncionario(payload);
 if (validationResult.erro) {
     alert(validationResult.msg_erro);
     return;
@@ -66,11 +71,11 @@ if (validationResult.erro) {
             return response.json();
         })
         .then(data => {
-            advogados = JSON.parse(data.data)  
+            funcionarios = JSON.parse(data.data)  
          
             // AJUSTE: Tratamento de sucesso mais claro para o usuário.
-            alert('Advogado salvo com sucesso!');
-            $('#form-novo-advogado')[0].reset(); // Limpa o formulário
+            alert('funcionario salvo com sucesso!');
+            $('#form-novo-funcionario')[0].reset(); // Limpa o formulário
             window.location.reload(); // Recarrega a página para ver as alterações na lista
         })
         .catch(error => {
@@ -85,27 +90,27 @@ if (validationResult.erro) {
 });
 
     // --- LÓGICA PARA ABRIR E PREENCHER O FORMULÁRIO DE EDIÇÃO ---
-    // Adiciona um listener de evento na tabela. O evento é delegado para as linhas '.advogado-row'
-    $('.tabela-advogados tbody').on('click', '.advogado-row', function() {
-        // Pega o objeto do advogado do atributo data-
-        const advogadoData = $(this).data('advogado');
+    // Adiciona um listener de evento na tabela. O evento é delegado para as linhas '.funcionario-row'
+    $('.tabela-funcionarios tbody').on('click', '.funcionario-row', function() {
+        // Pega o objeto do funcionario do atributo data-
+        const funcionarioData = $(this).data('funcionario');
 
-        if (advogadoData) {
-            // Preenche os campos do formulário com os dados do advogado
-            $('#advogado_id').val(advogadoData.id);
-            $('#advogado_nome').val(advogadoData.nome);
-            $('#advogado_cpf_cnpj').val(advogadoData.cpf_cnpj);
-            $('#advogado_endereco').val(advogadoData.endereco);
-            $('#advogado_uf').val(advogadoData.uf);
-            $('#advogado_cidade').val(advogadoData.cidade);
-            $('#advogado_bairro').val(advogadoData.bairro);
-            $('#advogado_telefone').val(advogadoData.telefone);
-            $('#setor').val(advogadoData.setor);
-            $('#advogado_status').val(advogadoData.status || 'ativo'); // Preenche o status
-            $('#advogado_email').val(advogadoData.email);
+        if (funcionarioData) {
+            // Preenche os campos do formulário com os dados do funcionario
+            $('#funcionario_id').val(funcionarioData.id);
+            $('#funcionario_nome').val(funcionarioData.nome);
+            $('#funcionario_cpf_cnpj').val(funcionarioData.cpf_cnpj);
+            $('#funcionario_endereco').val(funcionarioData.endereco);
+            $('#funcionario_uf').val(funcionarioData.uf);
+            $('#funcionario_cidade').val(funcionarioData.cidade);
+            $('#funcionario_bairro').val(funcionarioData.bairro);
+            $('#funcionario_telefone').val(funcionarioData.telefone);
+            $('#setor').val(funcionarioData.setor);
+            $('#funcionario_status').val(funcionarioData.status || 'ativo'); // Preenche o status
+            $('#funcionario_email').val(funcionarioData.email);
 
             // Altera o título do formulário
-            $('#form-novo-advogado h1').text('Editar Dados do Advogado');
+            $('#form-novo-funcionario h1').text('Editar Dados do funcionario');
 
             // Exibe o formulário e esconde a listagem
             cadastroContainer.addClass('modal-ativo'); // Abre o modal com os dados preenchidos
@@ -115,7 +120,7 @@ if (validationResult.erro) {
     // --- LÓGICA PARA FILTRAR A LISTA PELOS CARDS DE STATUS ---
     $('.container-retangulos .retangulo').on('click', function() {
         const filtro = $(this).data('filter');
-        const todasAsLinhas = $('.tabela-advogados tbody .advogado-row');
+        const todasAsLinhas = $('.tabela-funcionarios tbody .funcionario-row');
 
         // Se o filtro for 'todos', mostra todas as linhas
         if (filtro === 'todos') {
@@ -137,17 +142,17 @@ if (validationResult.erro) {
     });
 
     // --- LÓGICA PARA A BARRA DE PESQUISA POR NOME ---
-    $('#filtro-nome-advogado').on('keyup', function() {
+    $('#filtro-nome-funcionario').on('keyup', function() {
         const searchTerm = $(this).val().toLowerCase();
-        const todasAsLinhas = $('.tabela-advogados tbody .advogado-row');
+        const todasAsLinhas = $('.tabela-funcionarios tbody .funcionario-row');
 
         todasAsLinhas.each(function() {
             const linha = $(this);
-            // Pega o nome do advogado do primeiro <td> da linha
-            const nomeAdvogado = linha.find('td:first').text().toLowerCase();
+            // Pega o nome do funcionario do primeiro <td> da linha
+            const nomefuncionario = linha.find('td:first').text().toLowerCase();
 
-            // Verifica se o nome do advogado inclui o termo pesquisado
-            if (nomeAdvogado.includes(searchTerm)) {
+            // Verifica se o nome do funcionario inclui o termo pesquisado
+            if (nomefuncionario.includes(searchTerm)) {
                 linha.show(); // Mostra a linha se corresponder
             } else {
                 linha.hide(); // Esconde a linha se não corresponder
@@ -156,17 +161,17 @@ if (validationResult.erro) {
     });
 
 });
-function validateAdvogado(advogado) {
+function validatefuncionario(funcionario) {
     // Instancia a classe que contém os métodos de validação
     const validator = new snaValidatorFrontJs();
-    console.log('teste ' + advogado.nome);
+    console.log('teste ' + funcionario.nome);
     let data = {};
     data.msg_erro = '';
     data.erro = false;
     // ----------------------------------------------------------------------
     // 1. VALIDAÇÃO: NOME COMPLETO (Campo preenchido)
     // ----------------------------------------------------------------------
-    if (advogado.nome === '') {
+    if (funcionario.nome === '') {
         data.msg_erro = 'O nome completo deve ser preenchido';
         data.campo = 'nome';
         data.erro = true;
@@ -176,7 +181,7 @@ function validateAdvogado(advogado) {
     // 2. VALIDAÇÃO: NOME COMPLETO (Formato: Nome e Sobrenome)
     // ----------------------------------------------------------------------
     // Utiliza o método nomeCompleto(str) da classe
-    if (!validator.nomeCompleto(advogado.nome)) {
+    if (!validator.nomeCompleto(funcionario.nome)) {
         data.msg_erro = 'O nome deve conter nome e sobrenome (pelo menos duas palavras)';
         data.campo = 'nome';
         data.erro = true;
@@ -188,9 +193,9 @@ function validateAdvogado(advogado) {
        // ----------------------------------------------------------------------
     // 3. CPF/CNPJ OBRIGATÓRIO
     // ----------------------------------------------------------------------
-    if (advogado.cpf_cnpj === '') {
-        data.msg_erro = 'Digite o CPF ou o CNPJ do advogado.';
-        data.campo = 'advogado_cpf_cnpj';
+    if (funcionario.cpf_cnpj === '') {
+        data.msg_erro = 'Digite o CPF ou o CNPJ do funcionario.';
+        data.campo = 'funcionario_cpf_cnpj';
         data.erro = true;
         return data;
     }
@@ -198,9 +203,9 @@ function validateAdvogado(advogado) {
     // ----------------------------------------------------------------------
     // 4. VALIDAÇÃO CPF/CNPJ
     // ----------------------------------------------------------------------
-    if (!validator.cpfOuCnpj(advogado.cpf_cnpj)) {
+    if (!validator.cpfOuCnpj(funcionario.cpf_cnpj)) {
         data.msg_erro = 'Digite um CPF ou CNPJ válido.';
-        data.campo = 'advogado_cpf_cnpj';
+        data.campo = 'funcionario_cpf_cnpj';
         data.erro = true;
         return data;
     }
@@ -208,9 +213,9 @@ function validateAdvogado(advogado) {
     // ----------------------------------------------------------------------
     // 5. TELEFONE (opcional, mas válido)
     // ----------------------------------------------------------------------
-if (!validator.fone(advogado.telefone)) {
+if (!validator.fone(funcionario.telefone)) {
     data.msg_erro = 'O telefone deve conter apenas números e ter 10 ou 11 dígitos.';
-    data.campo = 'advogado_telefone';
+    data.campo = 'funcionario_telefone';
     data.erro = true;
     return data;
 }
@@ -219,9 +224,9 @@ if (!validator.fone(advogado.telefone)) {
     // 6. EMAIL (opcional)
     // ----------------------------------------------------------------------
  
-        if (!validator.email(advogado.email)) {
+        if (!validator.email(funcionario.email)) {
             data.msg_erro = 'O e-mail informado é inválido.';
-            data.campo = 'advogado_email';
+            data.campo = 'funcionario_email';
             data.erro = true;
             return data;
         }
@@ -241,32 +246,32 @@ if (!validator.fone(advogado.telefone)) {
     return ufs.includes(uf);
 }
 
-    if (!validarUF(advogado.uf)) {
+    if (!validarUF(funcionario.uf)) {
         data.msg_erro = 'Digite uma UF válida com 2 letras (ex: SP, RJ, MG).';
-        data.campo = 'advogado_uf';
+        data.campo = 'funcionario_uf';
         data.erro = true;
         return data;
     }
 
-    if (!advogado.cidade || advogado.cidade.trim().length < 2) {
+    if (!funcionario.cidade || funcionario.cidade.trim().length < 2) {
         data.msg_erro = 'Informe uma cidade válida.';
-        data.campo = 'advogado_cidade';
+        data.campo = 'funcionario_cidade';
         data.erro = true;
         return data;
 
     // Tudo OK
     return data;
 }
-   if (!advogado.bairro || advogado.bairro.trim().length < 2) {
+   if (!funcionario.bairro || funcionario.bairro.trim().length < 2) {
         data.msg_erro = 'Informe um bairro válido.';
-        data.campo = 'advogado_bairro';
+        data.campo = 'funcionario_bairro';
         data.erro = true;
         return data;
     }
 
-    if (!advogado.endereco || advogado.endereco.trim().length < 5) {
+    if (!funcionario.endereco || funcionario.endereco.trim().length < 5) {
         data.msg_erro = 'Informe um endereço válido.';
-        data.campo = 'advogado_endereco';
+        data.campo = 'funcionario_endereco';
         data.erro = true;
         return data;
     }

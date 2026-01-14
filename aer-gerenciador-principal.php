@@ -1,14 +1,14 @@
 <?php
 /**
- * Plugin Name:       Cadastro de Advogados
+ * Plugin Name:       Cadastro de Funcionarios
  * Plugin URI:        https://example.com/
- * Description:       Plugin para gerenciar cadastro de advogados.
+ * Description:       Plugin para gerenciar cadastro de funcionarios.
  * Version:           1.0.0
  * Author:            Yuki
  * Author URI:        https://example.com/
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
- * Text Domain:       cadastro-advogados
+ * Text Domain:       cadastro-funcionarios
  * Domain Path:       /languages
  */
 
@@ -22,24 +22,24 @@ if ( ! defined( 'WPINC' ) ) {
  *
  * @param string $hook O hook da página atual.
  */
-function includes_scripts_aer_advogados( $hook ) {
+function includes_scripts_aer_funcionarios( $hook ) {
 
-    if ( 'toplevel_page_aer-gerenciador-advogados' !== $hook ) {
+    if ( 'toplevel_page_aer-gerenciador-funcionarios' !== $hook ) {
         return;
     }
 
 
     wp_enqueue_style(
-        'aer-advogados-style',
-        plugin_dir_url( __FILE__ ) . 'views/style-gerenciador-advogados.css',
+        'aer-funcionarios-style',
+        plugin_dir_url( __FILE__ ) . 'views/style-gerenciador-funcionarios.css',
         array(),
         '1.0.1' 
     );
 
 
     wp_enqueue_script(
-        'aer-advogados-js',
-        plugin_dir_url( __FILE__ ) . 'Js/java-gerenciador-advogados.js',
+        'aer-funcionarios-js',
+        plugin_dir_url( __FILE__ ) . 'Js/java-gerenciador-funcionarios.js',
         array( 'jquery' ),
         '1.0.1',
         true 
@@ -62,7 +62,7 @@ function includes_scripts_aer_advogados( $hook ) {
     // Passa dados do PHP para o JavaScript (URL da API, nonce, etc.)
     // Esta função deve ser chamada DEPOIS de wp_enqueue_script
     wp_localize_script(
-        'aer-advogados-js', // 1. O handle do script que receberá os dados
+        'aer-funcionarios-js', // 1. O handle do script que receberá os dados
         'AerApiSettings',   // 2. O nome do objeto JavaScript que será criado
         array(              // 3. Os dados a serem passados
             'root'    => esc_url_raw(rest_url()), // URL base da API (ex: /wp-json/)
@@ -70,23 +70,23 @@ function includes_scripts_aer_advogados( $hook ) {
         )
     );
 }
-add_action( 'admin_enqueue_scripts', 'includes_scripts_aer_advogados' );
+add_action( 'admin_enqueue_scripts', 'includes_scripts_aer_funcionarios' );
 
 
-function aer_gerenciador_advogados_admin_menu() {
+function aer_gerenciador_funcionarios_admin_menu() {
     add_menu_page(
         'Funcionários',
         'Cadastro de Funcionários',                
         'manage_options',          
-        'aer-gerenciador-advogados',
-        'aer_gerenciador_advogados_page_html', 
+        'aer-gerenciador-funcionarios',
+        'aer_gerenciador_funcionarios_page_html', 
         'dashicons-groups'     
     );
 }
-add_action( 'admin_menu', 'aer_gerenciador_advogados_admin_menu' );
+add_action( 'admin_menu', 'aer_gerenciador_funcionarios_admin_menu' );
 
 
-function aer_gerenciador_advogados_page_html() {
+function aer_gerenciador_funcionarios_page_html() {
 
     echo '<div id="aer-listagem-container">';
     require_once plugin_dir_path( __FILE__ ) . 'views/listagem.php';
@@ -98,8 +98,8 @@ function aer_gerenciador_advogados_page_html() {
     echo '</div>';
 
             wp_localize_script(
-        'java-gerenciador-advogados',
-        'aer-advogados-js',
+        'java-gerenciador-funcionarios',
+        'aer-funcionarios-js',
         'AerApiSettings',
         array(
             'root' => esc_url_raw(rest_url()),
