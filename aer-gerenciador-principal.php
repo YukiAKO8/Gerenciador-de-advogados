@@ -45,27 +45,26 @@ function includes_scripts_aer_funcionarios( $hook ) {
         true 
     );
     wp_enqueue_script(
-        'jshelpers', // ID único
+        'jshelpers',
         plugins_url('../sna-helpers/includes/functions.js', __FILE__),
-        array('jquery'), // Dependências: jQuery
-        '1.0', // Versão
+        array('jquery'), 
+        '1.0', 
         true
     );
     wp_enqueue_script(
-        'jsvalidator', // ID único
+        'jsvalidator', 
         plugins_url('../sna-helpers/includes/snaValidatorFront.js', __FILE__),
-        array('jquery'), // Dependências: jQuery
-        '1.0', // Versão
+        array('jquery'), 
+        '1.0', 
         true
     );
 
-    // Passa dados do PHP para o JavaScript (URL da API, nonce, etc.)
-    // Esta função deve ser chamada DEPOIS de wp_enqueue_script
+
     wp_localize_script(
-        'aer-funcionarios-js', // 1. O handle do script que receberá os dados
-        'AerApiSettings',   // 2. O nome do objeto JavaScript que será criado
-        array(              // 3. Os dados a serem passados
-            'root'    => esc_url_raw(rest_url()), // URL base da API (ex: /wp-json/)
+        'aer-funcionarios-js', 
+        'AerApiSettings',   
+        array(             
+            'root'    => esc_url_raw(rest_url()), 
             'nonce'   => wp_create_nonce('wp_rest'),
         )
     );
@@ -93,7 +92,7 @@ function aer_gerenciador_funcionarios_page_html() {
     echo '</div>';
 
 
-    echo '<div id="aer-cadastro-container">'; // Removido o style="display: none;"
+    echo '<div id="aer-cadastro-container">'; 
     require_once plugin_dir_path( __FILE__ ) . 'views/cadastro-novo.php';
     echo '</div>';
 }

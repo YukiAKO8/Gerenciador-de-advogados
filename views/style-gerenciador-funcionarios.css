@@ -104,7 +104,7 @@
         rgba(255,0,255,0.15),
         rgba(255,255,255,0.25)
     );
-    mix-blend-mode: overlay; /* Ajustado para funcionar melhor em fundo claro */
+    mix-blend-mode: overlay; 
     animation: shimmer 4s ease-in-out infinite;
     pointer-events: none;
     transform: translateZ(16px);
@@ -116,7 +116,7 @@
     100% { opacity: 0.25; }
 }
 
-/* Seção dos Cards de Métricas */
+
 .container-retangulos {
     display: grid
 ;
@@ -127,7 +127,7 @@
 }
 
 .container-retangulos .retangulo {
-    /* Fundo branco estilo glass limpo */
+
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.4));
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
@@ -141,22 +141,22 @@
     overflow: hidden;
 }
 
-/* Efeito de brilho (Shimmer) igual ao do crachá */
+
 .container-retangulos .retangulo::after {
     display: none;
 }
 
-/* Bordas coloridas para cada card de métrica */
+
 .retangulo-total {
-    border-left: 5px solid #2271b1 !important; /* Azul */
+    border-left: 5px solid #2271b1 !important; 
 }
 
 .retangulo-ativos {
-    border-left: 5px solid #28a745 !important; /* Verde */
+    border-left: 5px solid #28a745 !important; 
 }
 
 .retangulo-inativos {
-    border-left: 5px solid #dc3545 !important; /* Vermelho */
+    border-left: 5px solid #dc3545 !important;
 }
 
 .container-retangulos .retangulo:hover {
@@ -170,7 +170,7 @@
     font-size: 15px;
     font-weight: 500;
     color: #646970;
-    position: relative; /* Garante que o texto fique sobre o brilho */
+    position: relative; 
     z-index: 1;
 }
 
@@ -179,15 +179,15 @@
     font-weight: 600;
     margin: 8px 0 0;
     color: #1d2327;
-    position: relative; /* Garante que o número fique sobre o brilho */
+    position: relative;
     z-index: 1;
 }
 
-/* Seção Principal da Listagem de funcionarios */
+
 .principal-listagem {
-    margin-top: 32px; /* Adiciona espaço acima da tabela */
-    background: rgba(255, 255, 255, 0.4); /* Fundo branco semi-transparente */
-    backdrop-filter: blur(10px); /* Desfoque para efeito fosco */
+    margin-top: 32px; 
+    background: rgba(255, 255, 255, 0.4); 
+    backdrop-filter: blur(10px); 
     -webkit-backdrop-filter: blur(10px);
     border-radius: 24px;
     padding: 32px;
@@ -196,7 +196,7 @@
 
 .listagem-header {
     display: flex;
-    justify-content: space-between; /* Alinha título à esquerda e botão à direita */
+    justify-content: space-between; 
     align-items: center;
     margin-bottom: 24px;
 }
@@ -232,7 +232,7 @@
     box-shadow: 0 0 0 1px #2a4982;
 }
 
-/* Tabela de funcionarios */
+
 .tabela-funcionarios {
     width: 100%;
     border-collapse: collapse;
@@ -241,12 +241,12 @@
 .tabela-funcionarios th,
 .tabela-funcionarios td {
     padding: 14px 16px;
-    border-bottom: 1px solid #f0f0f0; /* Linhas separadoras suaves */
+    border-bottom: 1px solid #f0f0f0; 
     text-align: left;
 }
 
 .tabela-funcionarios th {
-    background-color: #f7f7f7; /* Fundo cinza claro para o cabeçalho */
+    background-color: #f7f7f7; 
     font-weight: 600;
     font-size: 13px;
     color: #50575e;
@@ -255,15 +255,15 @@
 }
 
 .tabela-funcionarios tbody tr:hover {
-    background-color: #f9f9f9; /* Efeito hover suave */
+    background-color: #f9f9f9; 
 }
 
-/* Adiciona um cursor de ponteiro para indicar que a linha é clicável */
+
 .tabela-funcionarios .funcionario-row {
     cursor: pointer;
 }
 
-/* --- Estilos para o Indicador de Status na Lista --- */
+
 .status-indicator {
     display: inline-block;
     padding: 4px 12px;
@@ -275,17 +275,17 @@
 }
 
 .status-ativo {
-    background-color: #28a745; /* Verde */
+    background-color: #28a745; 
     color: #fff;
 }
 
 .status-inativo {
-    background-color: #dc3545; /* Vermelho */
+    background-color: #dc3545; 
     color: #fff;
 }
 
 
-/* Botão "Adicionar funcionario" */
+
 .botao-adicionar-funcionario {
     position: relative;
     display: inline-flex;
@@ -348,33 +348,31 @@
     color: #fff !important;
 }
 
-/* --- Estilos do Modal de Cadastro/Edição --- */
 
-/* O container do modal (overlay) */
 #aer-cadastro-container {
-    position: fixed; /* Fica fixo na tela */
+    position: fixed; 
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.6); /* Fundo escuro semi-transparente */
-    z-index: 1000; /* Garante que fique sobre todo o conteúdo */
-    display: flex; /* Usa flexbox para centralizar o conteúdo */
+    background-color: rgba(0, 0, 0, 0.6); 
+    z-index: 1000; 
+    display: flex; 
     align-items: center;
     justify-content: center;
-    padding: 40px; /* Adiciona espaço interno para melhor centralização */
-    opacity: 0; /* Começa invisível */
-    visibility: hidden; /* Começa escondido */
+    padding: 40px; 
+    opacity: 0; 
+    visibility: hidden; 
     transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
-/* Classe para ativar o modal */
+
 #aer-cadastro-container.modal-ativo {
     opacity: 1;
     visibility: visible;
 }
 
-/* O formulário dentro do modal */
+
 #form-novo-funcionario {
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(20px);
@@ -383,14 +381,14 @@
     border-radius: 28px;
     border: 1px solid rgba(255, 255, 255, 0.5);
     box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-    width: 90%; /* Ocupa 90% da largura da tela */
+    width: 90%; 
     max-width: 1450px;
-    position: relative; /* Necessário para a animação de fundo */
-    transform: scale(0.95); /* Efeito de zoom ao aparecer */
+    position: relative; 
+    transform: scale(0.95); 
     transition: transform 0.3s ease;
 }
 
-/* Estilo para o botão de fechar (X) no modal */
+
 .modal-close-button {
     position: absolute;
     top: 25px;
@@ -402,15 +400,15 @@
     background: none;
     border: none;
     padding: 0;
-    z-index: 2; /* Garante que o botão fique acima do conteúdo do modal */
+    z-index: 2; 
 }
 
 
 #aer-cadastro-container.modal-ativo #form-novo-funcionario {
-    transform: scale(1); /* Retorna ao tamanho normal quando ativo */
+    transform: scale(1); 
 }
 
-/* Garante que o conteúdo do formulário fique na frente da animação */
+
 #form-novo-funcionario > *:not(.animated-background):not(.modal-close-button) {
     position: relative;
     z-index: 1;
@@ -463,7 +461,7 @@
 }
 
 .form-buttons .button .dashicons {
-    /* Resetando estilos padrão para usar posicionamento absoluto nos botões específicos */
+    
     display: flex;
     align-items: center;
     justify-content: center;
@@ -483,10 +481,10 @@
     text-decoration: none;
     overflow: hidden;
     transition: color 0.4s ease-in-out, background-color 0.4s ease-in-out, border-color 0.4s ease-in-out;
-    border: 2px solid #28a745 !important; /* Verde */
+    border: 2px solid #28a745 !important; 
     cursor: pointer;
     background-color: #fff !important;
-    color: #28a745 !important; /* Verde */
+    color: #28a745 !important; 
     z-index: 1;
 }
 
@@ -545,10 +543,10 @@
     text-decoration: none;
     overflow: hidden;
     transition: color 0.4s ease-in-out, background-color 0.4s ease-in-out, border-color 0.4s ease-in-out;
-    border: 2px solid #ffc107 !important; /* Amarelo */
+    border: 2px solid #ffc107 !important; 
     cursor: pointer;
     background-color: #fff !important;
-    color: #ffc107 !important; /* Amarelo */
+    color: #ffc107 !important; 
     z-index: 1;
 }
 
@@ -594,7 +592,7 @@
     color: #fff !important;
 }
 
-/* --- Animação de fundo Light System --- */
+
 
 .animated-background {
     position: absolute;
@@ -603,12 +601,12 @@
     right: 0;
     bottom: 0;
     overflow: hidden;
-    z-index: 0; /* Coloca a animação atrás do conteúdo */
-    border-radius: 28px; /* Para corresponder ao .main-content-container */
+    z-index: 0; 
+    border-radius: 28px; 
     background: #f9fafb;
 }
 
-/* luz ambiente */
+
 .animated-background::before {
     content: "";
     position: absolute;
@@ -620,7 +618,7 @@
     z-index: 1;
 }
 
-/* ruído ultra sutil */
+
 .animated-background::after {
     content: "";
     position: absolute;
@@ -638,7 +636,7 @@
 }
 
 .animated-background canvas {
-    display: none; /* Esconde o canvas da animação antiga (hexágonos) */
+    display: none; 
 }
 
 @keyframes lightMove {
@@ -647,7 +645,7 @@
     100% { transform: translate(0%, 0%); }
 }
 
-/* Garante que o conteúdo real fique na frente da animação */
+
 .main-content-container > *:not(.animated-background) {
     position: relative;
     z-index: 1;
