@@ -118,7 +118,7 @@ if (validationResult.erro) {
             $('#funcionario_email').val(funcionarioData.email);
 
             // Altera o título do formulário
-            $('#form-novo-funcionario h1').text('Editar Dados do funcionario');
+            $('#form-novo-funcionario h1').text('Editar Dados do Funcionario');
 
             // Exibe o formulário e esconde a listagem
             cadastroContainer.addClass('modal-ativo'); // Abre o modal com os dados preenchidos

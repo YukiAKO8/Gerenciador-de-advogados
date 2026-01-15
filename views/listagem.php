@@ -51,11 +51,63 @@ if (!empty($funcionarios) && is_array($funcionarios)) {
 
 <div class="wrap"><div class="aer-plugin-wrapper">
     <div class="main-content-container">
-        <!-- Fundo animado Hexagonal -->
-        <div class="animated-background" data-color="white"></div>
+        <!-- Fundo animado Light System -->
+        <div class="animated-background"></div>
 
         <div class="plugin-header">
-            <img src="<?php echo plugin_dir_url( __FILE__ ) . '../views/LogoCracha.png'; ?>" alt="Logo" class="plugin-logo">
+            <div class="scene">
+                <div class="badge">
+                    <!-- FRENTE -->
+                    <div class="face front">
+                        <svg width="160" height="260" viewBox="0 0 160 260">
+                            <defs>
+                                <linearGradient id="holo" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#cdb4ff"/>
+                                    <stop offset="50%" stop-color="#a2d2ff"/>
+                                    <stop offset="100%" stop-color="#ffc8dd"/>
+                                </linearGradient>
+                            </defs>
+                            <rect x="10" y="40" width="140" height="200" rx="24" fill="url(#holo)" />
+                            <circle cx="80" cy="55" r="6" fill="rgba(255,255,255,0.6)"/>
+                            <!-- Bonequinho MSN -->
+                            <circle cx="80" cy="120" r="16" fill="#fff"/>
+                            <circle cx="80" cy="165" r="24" fill="#fff"/>
+                            <!-- Gravata -->
+                            <polygon points="80,142 72,160 80,170 88,160" fill="rgba(0,0,0,0.18)"/>
+                        </svg>
+                    </div>
+                    <!-- VERSO COM ENGRENAGEM -->
+                    <div class="face back">
+                        <svg width="160" height="260" viewBox="0 0 160 260">
+                            <defs>
+                                <radialGradient id="gearGlow" cx="50%" cy="50%" r="60%">
+                                    <stop offset="0%" stop-color="rgba(0,0,0,0.1)"/>
+                                    <stop offset="100%" stop-color="rgba(0,0,0,0.05)"/>
+                                </radialGradient>
+                            </defs>
+                            <rect x="10" y="40" width="140" height="200" rx="24" fill="rgba(0,0,0,0.05)" />
+                            <g transform="translate(80 140)">
+                                <!-- DENTES GROSSOS -->
+                                <g fill="rgba(0,0,0,0.2)">
+                                    <rect x="-7" y="-64" width="14" height="26" rx="3"/>
+                                    <rect x="-7" y="-64" width="14" height="26" rx="3" transform="rotate(45)"/>
+                                    <rect x="-7" y="-64" width="14" height="26" rx="3" transform="rotate(90)"/>
+                                    <rect x="-7" y="-64" width="14" height="26" rx="3" transform="rotate(135)"/>
+                                    <rect x="-7" y="-64" width="14" height="26" rx="3" transform="rotate(180)"/>
+                                    <rect x="-7" y="-64" width="14" height="26" rx="3" transform="rotate(225)"/>
+                                    <rect x="-7" y="-64" width="14" height="26" rx="3" transform="rotate(270)"/>
+                                    <rect x="-7" y="-64" width="14" height="26" rx="3" transform="rotate(315)"/>
+                                </g>
+                                <!-- CORPO DA ENGRENAGEM -->
+                                <circle r="40" fill="url(#gearGlow)" />
+                                <circle r="26" fill="rgba(255,255,255,0.35)" />
+                                <circle r="8"  fill="rgba(0,0,0,0.45)" />
+                            </g>
+                        </svg>
+                    </div>
+                    <div class="glow"></div>
+                </div>
+            </div>
             <div class="plugin-header-text">
                 <h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
                 <h2 class="plugin-subtitle">Organizar, centralizar e facilitar o controle de todas as informações relacionadas aos profissionais do SNA</h2>
@@ -79,10 +131,10 @@ if (!empty($funcionarios) && is_array($funcionarios)) {
 
         <div class="principal-listagem">
             <div class="listagem-header">
-                <h2>funcionarios Cadastrados</h2>
+                <h2>Funcionarios Cadastrados</h2>
                 <div class="listagem-actions">
                     <input type="text" id="filtro-nome-funcionario" class="search-input" placeholder="Pesquisar por nome...">
-                    <a href="#" class="botao-adicionar-funcionario"><span class="dashicons dashicons-plus-alt"></span>Adicionar funcionario</a>
+                    <a href="#" class="botao-adicionar-funcionario"><span class="dashicons dashicons-plus-alt"></span>Novo Funcionario</a>
                 </div>
             </div>
             

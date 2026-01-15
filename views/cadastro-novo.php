@@ -8,8 +8,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <form id="form-novo-funcionario" method="post">
     <button type="button" class="modal-close-button" id="botao-fechar-modal">&times;</button>
-    <!-- Fundo animado Hexagonal -->
-    <div class="animated-background" data-color="white"></div>
+    <!-- Fundo animado Light System -->
+    <div class="animated-background"></div>
 
     <h1 style="margin-bottom: 30px; font-size: 24px;">Funcionários</h1>
     <!-- Campo oculto para armazenar o ID do funciinario durante a edição -->
