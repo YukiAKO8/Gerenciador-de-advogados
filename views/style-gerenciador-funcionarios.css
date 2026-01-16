@@ -5,7 +5,7 @@
 }
 
 /* Contêiner principal que envolve todo o conteúdo do plugin */
-.aer-plugin-wrapper {
+.container-principal-listagem {
     width: 100%;
     max-width: 1400px; /* Container centralizado com largura máxima */
     margin: 50px auto 24px; /* Aumenta a margem superior para 50px */
@@ -14,7 +14,7 @@
 }
 
 /* Novo container branco para envolver todo o conteúdo principal */
-.main-content-container {
+.container-envolve-conteudo {
     background: rgba(255, 255, 255, 0.93);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
@@ -27,7 +27,7 @@
 
 
 
-.plugin-header {
+.titulo-do-plugin {
     display: flex;
     align-items: center; 
     justify-content: center; 
@@ -35,14 +35,14 @@
     margin-bottom: 32px; 
 }
 
-.plugin-header h1 {
+.titulo-do-plugin h1 {
     margin: 0;
     font-size: 45px;
     font-weight: 600;
     margin-left: -50px;
     margin-top: -80px;
 }
-.plugin-subtitle {
+.subtitulo-plugin {
     margin: 4px 0 0;
     font-size: 16px;
     font-weight: 400;
@@ -118,8 +118,7 @@
 
 
 .container-retangulos {
-    display: grid
-;
+    display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 24px;
     margin-bottom: 32px;
@@ -194,26 +193,26 @@
     border: 1px solid rgba(255, 255, 255, 0.4);
 }
 
-.listagem-header {
+.titulo-listagem {
     display: flex;
     justify-content: space-between; 
     align-items: center;
     margin-bottom: 24px;
 }
 
-.listagem-header h2 {
+.titulo-listagem h2 {
     margin: 0;
     font-size: 20px;
     font-weight: 600;
 }
 
-.listagem-actions {
+.acao-listagem {
     display: flex;
     align-items: center;
     gap: 15px;
 }
 
-.search-input {
+.input-da-pesquisa {
     padding: 12px 20px !important;
     border: 1px solid #ddd !important;
     border-radius: 20px !important;
@@ -226,10 +225,10 @@
     padding-right: 40px;
 }
 
-.search-input:focus {
+.input-da-pesquisa:focus {
     outline: none;
-    border-color: #2a4982;
-    box-shadow: 0 0 0 1px #2a4982;
+    border-color: #cdb4ff;
+    box-shadow: 0 0 0 1px #cdb4ff;
 }
 
 
@@ -264,7 +263,7 @@
 }
 
 
-.status-indicator {
+.indicador-status {
     display: inline-block;
     padding: 4px 12px;
     border-radius: 15px;
@@ -389,7 +388,7 @@
 }
 
 
-.modal-close-button {
+.fechar-modal-x {
     position: absolute;
     top: 25px;
     right: 25px;
@@ -409,24 +408,24 @@
 }
 
 
-#form-novo-funcionario > *:not(.animated-background):not(.modal-close-button) {
+#form-novo-funcionario > *:not(.animated-background):not(.fechar-modal-x) {
     position: relative;
     z-index: 1;
 }
-.form-row {
+.linha-formulario {
     display: flex;
     gap: 20px;
     margin-bottom: 20px;
 }
 
-.form-field {
+.campo-formulario {
     flex: 1;
     display: flex;
     flex-direction: column;
 }
 
-.form-field select.regular-text,
-.form-field input.regular-text {
+.campo-formulario select.regular-text,
+.campo-formulario input.regular-text {
     width: 100%;
     padding: 8px 12px;
     border: 1px solid #ddd;
@@ -436,31 +435,45 @@
     background-color: #fff;
 }
 
-.form-field label {
+.campo-formulario label {
     font-weight: 500;
     margin-bottom: 5px;
 }
 
-.form-field select.regular-text:focus,
-.form-field input.regular-text:focus {
+.campo-formulario select.regular-text:focus,
+.campo-formulario input.regular-text:focus {
     outline: none;
-    border-color: #2271b1;
-    box-shadow: 0 0 0 1px #2271b1;
+    border-color: #cdb4ff;
+    box-shadow: 0 0 0 1px #cdb4ff;
+}
+
+/* Estilos para o canvas de fundo p5.js */
+#p5-canvas-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0; /* Coloca o canvas atrás de outro conteúdo */
+}
+.wrap {
+    position: relative; /* Necessário para o z-index funcionar */
+    z-index: 1; 
 }
 
 
-.form-buttons {
+.botoes-formulario-funcionarios {
     margin-top: 30px;
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
-.form-buttons .button {
+.botoes-formulario-funcionarios .botao {
     margin: 0;
 }
 
-.form-buttons .button .dashicons {
+.botoes-formulario-funcionarios .botao .icone {
     
     display: flex;
     align-items: center;
@@ -468,7 +481,7 @@
     margin: 0;
 }
 
-.form-buttons .salvar-funcionario {
+.botoes-formulario-funcionarios .salvar-funcionario {
     position: relative;
     display: inline-flex;
     align-items: center;
@@ -488,7 +501,7 @@
     z-index: 1;
 }
 
-.form-buttons .salvar-funcionario::before {
+.botoes-formulario-funcionarios .salvar-funcionario::before {
     content: '';
     position: absolute;
     left: 2px;
@@ -501,15 +514,15 @@
     z-index: -1;
 }
 
-.form-buttons .salvar-funcionario:hover {
+.botoes-formulario-funcionarios .salvar-funcionario:hover {
     color: transparent !important;
 }
 
-.form-buttons .salvar-funcionario:hover::before {
+.botoes-formulario-funcionarios .salvar-funcionario:hover::before {
     width: calc(100% - 4px);
 }
 
-.form-buttons .salvar-funcionario .dashicons {
+.botoes-formulario-funcionarios .salvar-funcionario .icone {
     position: absolute;
     left: 0;
     top: 0;
@@ -524,13 +537,13 @@
     color: #fff;
 }
 
-.form-buttons .salvar-funcionario:hover .dashicons {
+.botoes-formulario-funcionarios .salvar-funcionario:hover .icone {
     left: 50%;
     transform: translateX(-50%);
     color: #fff !important;
 }
 
-.form-buttons .voltar-para-lista {
+.botoes-formulario-funcionarios .voltar-para-lista {
     position: relative;
     display: inline-flex;
     align-items: center;
@@ -550,7 +563,7 @@
     z-index: 1;
 }
 
-.form-buttons .voltar-para-lista::before {
+.botoes-formulario-funcionarios .voltar-para-lista::before {
     content: '';
     position: absolute;
     left: 2px;
@@ -563,15 +576,15 @@
     z-index: -1;
 }
 
-.form-buttons .voltar-para-lista:hover {
+.botoes-formulario-funcionarios .voltar-para-lista:hover {
     color: transparent !important;
 }
 
-.form-buttons .voltar-para-lista:hover::before {
+.botoes-formulario-funcionarios .voltar-para-lista:hover::before {
     width: calc(100% - 4px);
 }
 
-.form-buttons .voltar-para-lista .dashicons {
+.botoes-formulario-funcionarios .voltar-para-lista .icone {
     position: absolute;
     left: 0;
     top: 0;
@@ -586,7 +599,7 @@
     color: #fff;
 }
 
-.form-buttons .voltar-para-lista:hover .dashicons {
+.botoes-formulario-funcionarios .voltar-para-lista:hover .icone {
     left: 50%;
     transform: translateX(-50%);
     color: #fff !important;
@@ -646,7 +659,7 @@
 }
 
 
-.main-content-container > *:not(.animated-background) {
+.container-envolve-conteudo > *:not(.animated-background) {
     position: relative;
     z-index: 1;
 }

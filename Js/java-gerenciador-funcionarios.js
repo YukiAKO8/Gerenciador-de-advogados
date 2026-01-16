@@ -43,8 +43,8 @@ const fullUrlListar = AerApiSettings.root + 'aer-api/v1/funcionarios';
             setor: $('#setor').val(),
             ativo: $('#funcionario_status').val() === 'ativo' ? 1 : 0, // Envia 1 ou 0 conforme esperado pela API
             email: $('#funcionario_email').val(),
-            createdBy: user_atual,
-            updatedBy: user_atual,
+            createdBy: AerApiSettings.user_id,
+            updatedBy: AerApiSettings.user_id,
         };
 
         // Se o ID estiver vazio (novo cadastro), removemos a propriedade 'id' do payload.
@@ -82,13 +82,11 @@ if (validationResult.erro) {
             window.location.reload(); 
         })
         .catch(error => {
-            console.error(':x_vermelho: Erro na requisição AJAX:', error);
             console.error('Erro na requisição AJAX:', error);
             alert('Ocorreu um erro ao salvar. Verifique o console para mais detalhes.');
         })
         .finally(() => {
-           
-           console.log('Requisição finalizada.');
+           // Requisição finalizada
         });
 });
 
@@ -172,7 +170,6 @@ if (validationResult.erro) {
 function validatefuncionario(funcionario) {
     // Instancia a classe que contém os métodos de validação
     const validator = new snaValidatorFrontJs();
-    console.log('teste ' + funcionario.nome);
     let data = {};
     data.msg_erro = '';
     data.erro = false;
