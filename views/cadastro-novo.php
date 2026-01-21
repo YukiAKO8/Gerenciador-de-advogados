@@ -27,7 +27,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     </div>
 
     <div class="linha-formulario">
-        <div class="campo-formulario">
+        <div class="campo-formulario campo-setor">
             <label for="setor">Setor</label>
             <select id="setor" name="setor" class="regular-text">
                 <option value="">Selecione...</option>
@@ -46,7 +46,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                 <option value="Funcionario Externo">Funcionario Externo</option>
             </select>
         </div>
-        <div class="campo-formulario">
+        <div class="campo-formulario campo-status">
             <label for="funcionario_status">Status</label>
             <select id="funcionario_status" name="funcionario_status" class="regular-text">
                 <option value="ativo" selected>Ativo</option>
@@ -89,7 +89,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     </div>
 
     <div class="botoes-formulario-funcionarios">
-        <button type="submit" name="submit" id="submit" class="botao salvar-funcionario"><span class="icone dashicons dashicons-saved"></span> Salvar funcionario</button>
-        <button type="button" class="botao voltar-para-lista" id="botao-voltar-listagem"><span class="icone dashicons dashicons-arrow-left-alt"></span> Voltar</button>
+        <button type="submit" name="submit" id="submit" class="botao salvar-funcionario"><span class="icone icone-check dashicons dashicons-saved"></span> Salvar funcionario</button>
+        <button type="button" class="botao voltar-para-lista" id="botao-voltar-listagem"><span class="icone icone-arrow dashicons dashicons-arrow-left-alt"></span> Voltar</button>
     </div>
 </form>
