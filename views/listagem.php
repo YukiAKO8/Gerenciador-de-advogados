@@ -88,8 +88,7 @@ if ( ! defined( 'ABSPATH' ) ) {
             <div class="titulo-listagem">
                 <h2>Funcionarios Cadastrados</h2>
                 <div class="acao-listagem">
-                    <input type="text" id="filtro-nome-funcionario" class="input-da-pesquisa" placeholder="Pesquisar por nome...">
-                    <a href="#" class="botao-adicionar-funcionario"><span class="dashicons dashicons-plus-alt"></span>Novo Funcionario</a>
+                    <input type="text" id="filtro-nome-funcionario" class="input-da-pesquisa" placeholder="Pesquisar por nome, CPF ou setor...">
                 </div>
             </div>
             
@@ -121,6 +120,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 ?></tbody>
             </table>
+
+            <div class="paginacao-container">
+                <div class="paginacao-spacer"></div>
+                <div class="paginacao-controles">
+                    <button type="button" id="btn-anterior" class="botao-paginacao" disabled>&laquo; Anterior</button>
+                    <span id="info-paginacao">Página 1 de 1</span>
+                    <button type="button" id="btn-proximo" class="botao-paginacao">Próximo &raquo;</button>
+                </div>
+                <div class="paginacao-acoes">
+                    <a href="#" class="botao-adicionar-funcionario"><span class="dashicons dashicons-plus-alt"></span>Novo Funcionario</a>
+                </div>
+            </div>
         </div>
     </div>
 </div></div>

@@ -123,48 +123,91 @@ if (validationResult.erro) {
         }
     });
 
-    // --- LÓGICA PARA FILTRAR A LISTA PELOS CARDS DE STATUS ---
+    // --- LÓGICA UNIFICADA DE PAGINAÇÃO E FILTROS ---
+    const itemsPerPage = 8;
+    let currentPage = 1;
+    let currentFilterStatus = 'todos';
+    let currentSearchTerm = '';
+
+    function updateTable() {
+        const rows = $('.tabela-funcionarios tbody .funcionario-row');
+        let visibleRows = [];
+
+        // 1. Filtragem (Status e Nome)
+        rows.each(function() {
+            const row = $(this);
+            const status = row.data('status'); // 'ativo' ou 'inativo'
+            
+            // Pega os dados das colunas (Nome, CPF, Setor)
+            const name = row.find('td:eq(0)').text().toLowerCase();
+            const cpf = row.find('td:eq(1)').text().toLowerCase();
+            const setor = row.find('td:eq(2)').text().toLowerCase();
+            
+            const matchesStatus = (currentFilterStatus === 'todos' || status === currentFilterStatus);
+            // Verifica se o termo pesquisado está presente em qualquer um dos campos
+            const matchesSearch = (name.includes(currentSearchTerm) || cpf.includes(currentSearchTerm) || setor.includes(currentSearchTerm));
+
+            if (matchesStatus && matchesSearch) {
+                visibleRows.push(row);
+            }
+        });
+
+        // 2. Cálculos de Paginação
+        const totalPages = Math.ceil(visibleRows.length / itemsPerPage) || 1;
+        
+        // Ajusta página atual se exceder o total (ex: ao filtrar e reduzir resultados)
+        if (currentPage > totalPages) currentPage = totalPages;
+        if (currentPage < 1) currentPage = 1;
+
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
+
+        // 3. Renderização
+        rows.hide(); // Esconde tudo primeiro
+        // Mostra apenas os itens da página atual que passaram no filtro
+        visibleRows.slice(startIndex, endIndex).forEach(row => row.show());
+
+        // 4. Atualiza controles de paginação
+        $('#info-paginacao').text(`Página ${currentPage} de ${totalPages}`);
+        $('#btn-anterior').prop('disabled', currentPage === 1);
+        $('#btn-proximo').prop('disabled', currentPage === totalPages);
+    }
+
+    // Evento: Clique nos Cards de Status
     $('.container-retangulos .retangulo').on('click', function() {
-        const filtro = $(this).data('filter');
-        const todasAsLinhas = $('.tabela-funcionarios tbody .funcionario-row');
-
-        // Se o filtro for 'todos', mostra todas as linhas
-        if (filtro === 'todos') {
-            todasAsLinhas.show();
-            return;
-        }
-
-        // Caso contrário, itera sobre cada linha para decidir se deve mostrar ou esconder
-        todasAsLinhas.each(function() {
-            const linha = $(this);
-            const statusDaLinha = linha.data('status');
-
-            if (statusDaLinha === filtro) {
-                linha.show(); // Mostra se o status corresponde ao filtro
-            } else {
-                linha.hide(); // Esconde se não corresponde
-            }
-        });
+        currentFilterStatus = $(this).data('filter');
+        currentPage = 1; // Reseta para a primeira página ao mudar filtro
+        updateTable();
     });
 
-    // --- LÓGICA PARA A BARRA DE PESQUISA POR NOME ---
+    // Evento: Digitação na Busca
     $('#filtro-nome-funcionario').on('keyup', function() {
-        const searchTerm = $(this).val().toLowerCase();
-        const todasAsLinhas = $('.tabela-funcionarios tbody .funcionario-row');
-
-        todasAsLinhas.each(function() {
-            const linha = $(this);
-            // Pega o nome do funcionario do primeiro <td> da linha
-            const nomefuncionario = linha.find('td:first').text().toLowerCase();
-
-            // Verifica se o nome do funcionario inclui o termo pesquisado
-            if (nomefuncionario.includes(searchTerm)) {
-                linha.show(); // Mostra a linha se corresponder
-            } else {
-                linha.hide(); // Esconde a linha se não corresponder
-            }
-        });
+        currentSearchTerm = $(this).val().toLowerCase();
+        currentPage = 1; // Reseta para a primeira página ao pesquisar
+        updateTable();
     });
+
+    // Eventos: Botões de Paginação
+    $('#btn-anterior').on('click', function(e) {
+        e.preventDefault();
+        if (currentPage > 1) {
+            currentPage--;
+            updateTable();
+        }
+    });
+
+    $('#btn-proximo').on('click', function(e) {
+        e.preventDefault();
+        // A verificação de limite máximo é feita dentro do updateTable ou pelo estado disabled,
+        // mas verificamos aqui também para garantir.
+        if (!$(this).prop('disabled')) {
+            currentPage++;
+            updateTable();
+        }
+    });
+
+    // Inicializa a tabela na primeira carga
+    updateTable();
 
 });
 function validatefuncionario(funcionario) {
